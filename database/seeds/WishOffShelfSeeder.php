@@ -29,9 +29,11 @@ class WishOffShelfSeeder extends Seeder
                     WHEN strpos(sku,'@') > 0 THEN substring(sku,1,strpos(sku,'@') - 1) 
                     WHEN strpos(sku,'#') > 0 THEN substring(sku,1,strpos(sku,'#') - 1)
                     ELSE sku
-                END) AS newSku,now()::timestamp(0)without time zone AS updateDate
-                FROM wish_item
-                WHERE listingstatus='Ended' ";
+                END) AS newSku,
+                now()::timestamp(0)without time zone AS updateDate,w.selleruserid
+                FROM wish_item w
+                LEFT JOIN aliexpress_user u ON u.selleruserid=w.selleruserid 
+                WHERE  listingstatus='Ended' AND u.platform='wish' AND u.state1=1 ";
                 if ($k == count($arr) - 1){
                     $listingSql .= " AND id>={$arr[$k]}";
                 }else{
