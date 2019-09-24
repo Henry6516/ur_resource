@@ -27,7 +27,7 @@ class IbayTableSeeder extends Seeder
                     WHEN strpos(er.sku,'@') > 0 THEN substring(er.sku,1,strpos(er.sku,'@') - 1) 
                     WHEN strpos(er.sku,'#') > 0 THEN substring(er.sku,1,strpos(er.sku,'#') - 1)
                     ELSE er.sku
-                END) AS newSku,e.selleruserid
+                END) AS newSku,e.selleruserid,e.paypal
                 FROM ebay_item e  
                 INNER JOIN ebay_user eu ON eu.selleruserid=e.selleruserid AND eu.state1=1
                 INNER JOIN ebay_item_variation_specifics er ON er.itemid=e.itemid
